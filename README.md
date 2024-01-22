@@ -1,4 +1,4 @@
-# VPAMVSNet
+# LAMVSNet
 The official code repository for the paper:
 > **Boosting Multi-view Stereo with Late Cost Aggregation**
 >
