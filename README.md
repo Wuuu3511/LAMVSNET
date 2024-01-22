@@ -10,7 +10,7 @@ The official code repository for the paper:
 ## Introduction
 Pairwise matching cost aggregation is a crucial step for modern learning-based Multi-view Stereo (MVS). Prior works adopt an early aggregation scheme, which adds up pairwise costs into an intermediate cost. However, we analyze that this process can degrade informative pairwise matchings, thereby blocking the depth network from fully utilizing the original geometric matching cues. To address this challenge, we present a late aggregation approach that allows for aggregating pairwise costs throughout the network feed-forward process, achieving accurate estimations with only minor changes of the plain CasMVSNet. Instead of building an intermediate cost by weighted sum, late aggregation preserves all pairwise costs along a distinct view channel. This enables the succeeding depth network to fully utilize the crucial geometric cues without loss of cost fidelity. Grounded in the new aggregation scheme, we propose further techniques addressing view order dependence inside the preserved cost, handling flexible testing views, and improving the depth filtering process. Despite its technical simplicity, our method improves significantly upon the baseline cascade-based approach, achieving comparable results with state-of-the-art methods with favorable computation overhead.
 
-![](assets/overview.png)
+![外链图片转存失败,源站可能有防盗链机制,建议将图片保存下来直接上传](https://img-home.csdnimg.cn/images/20230724024159.png?origin_url=assets%2Foverview.png&pos_id=img-E30KpUa7-1705893891850)
 
 ##  Environment Setup
 ```
@@ -44,9 +44,9 @@ Download the preprocessed [BlendedMVS](https://drive.google.com/file/d/1ilxls-VJ
 blendedmvs                            
        ├── 5a0271884e62597cdee0d0eb                  
        ├── 5a3ca9cb270f0e3f14d0eddb                    
-       ├── ...                                                              
-	   ├── all_list.txt                                                  
-  	   ├── training_list.txt                                          
+       ├── ...                                                            
+       ├── all_list.txt                                                  
+       ├── training_list.txt                                          
        ├── ...                                                              
  ```
   
@@ -79,11 +79,7 @@ Specify the path for the BlendMVS dataset and the save path for the DTU training
 ```
 bash ./scripts/blendedmvs_finetune.sh
 ```
-You can also download our pre-trained and fine-tuned models.
-
-（1）Training on DTU dataset： [dtu.ckpt](https://drive.google.com/file/d/13OrM29W3ntZQIjenDUNP1hkco7EDQ3re/view?usp=drive_link)
-
-（2）Fine-tuning on BlendedMVS dataset: [bld.ckpt](https://drive.google.com/file/d/1wz7wZid82cKsb1Vwy3sDFut6vVVa8CIy/view?usp=drive_link)
+You can also download our [pre-trained](#section_dtu) and [fine-tuned](#section_tnt) models.
 ## Point cloud testing
 #### 1. Generate point cloud on DTU dataset
 
@@ -97,6 +93,25 @@ bash ./script/dtu_test.sh
 bash ./scripts/tank_test.sh 
  ```
  The point cloud filtering parameters for each scene are stored in ./filter/tank_test_config.py. Fine-tuning these parameters might lead to improved results.
+
+## Results on DTU dataset <a id="section_dtu"></a>
+
+|  Methods | Acc.   | Comp.  | Overall. |
+|-------|--------|--------|----------|
+| CasMVSNet(baseline)   | 0.325  | 0.385  | 0.355    |
+| UniMVSNet         | 0.352| 0.278| 0.315|
+| TransMVSNet        | **0.312**| 0.298| 0.305|
+| Ours[(Pre-trained model)](https://drive.google.com/file/d/13OrM29W3ntZQIjenDUNP1hkco7EDQ3re/view?usp=drive_link)| 0.335| **0.258**| **0.297**|
+
+## Results on Tanks and Temples benchmark <a id="section_tnt"></a>
+
+| Methods| Mean | Auditorium| Ballroom| Courtroom| Museum| Palace| Temple| 
+|--------|--------|--------|---------|--------|------------|--------|---------|
+| CasMVSNet(baseline)| 31.12| 19.81 |38.46| 29.10| 43.87 |27.36| 28.11|
+| UniMVSNet| 38.96 |28.33| 44.36 |**39.74**| **52.89** |33.80 |34.63|
+| TransMVSNet| 37.00 |24.84| 44.59| 34.77| 46.49| 34.69| 36.62|
+| Ours[(Pre-trained model)](https://drive.google.com/file/d/1wz7wZid82cKsb1Vwy3sDFut6vVVa8CIy/view?usp=drive_link)| **40.12**| **29.40**| **45.61**| 38.55| 51.69| **35.16** |**41.87**|
+
 ## Acknowledgements  
  Our code is based on [UniMVSNet](https://github.com/prstrive/UniMVSNet) and [DH2C-MVSNet](https://github.com/yhw-yhw/D2HC-RMVSNet). We express gratitude for these works.
 
