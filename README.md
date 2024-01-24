@@ -3,7 +3,7 @@ The official code repository for the paper:
 > **Boosting Multi-view Stereo with Late Cost Aggregation**
 >
 > Jiang Wu, Rui Li, Yu Zhu, Jinqiu Sun and Yanning Zhang
-> **[[arXiv]()]**
+> **[[arXiv](https://arxiv.org/pdf/2401.11751.pdf)]**
 
 **[TL; DR]** We present a simple channel-wise MVS cost aggregation that achieves competitive performances to SOTAs with only minor adjustments to the CasMVSNet.
  
